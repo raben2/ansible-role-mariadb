@@ -1,7 +1,19 @@
 ---
 mariadb_version: 10.1.18
 
-mysql_conf_tpl: change_me
-mysql_conf_file: settings.cnf
+mysql_conf_tpl: mysqld.j2
+mysql_conf_file: /etc/my.cnf
 
+mysql_root_password: change_me
 mysql_secure_installation: True
+mysql_data_dir: /var/lib/mysql
+mysql_log_dir: /var/log/mysql
+mysql_socket: /var/lib/mysql/mysql.sock
+mysql_pid: /var/run/mysqld/mysqld.pid
+mysql_user: mysql
+mysql_bind_address: 0.0.0.0
+mysql_storage_engine: innodb
+mysql_slow_log_enabled: True
+mysql_auditing_enabled: False
+mysql_binlog_enabled: False
+mysql_galera_node: False

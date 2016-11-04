@@ -1,0 +1,97 @@
+[mysqld]
+# Basic setup
+datadir = {{ mysql_data_dir }}
+socket = {{ mysql_socket }}
+user = {{ mysql_user }}
+bind-address={{ mysql_bind_address }}
+default_storage_engine={{ mysql_storage_engine }}
+lower-case-table-names = 1
+
+max_connections         = 200
+connect_timeout         = 5
+wait_timeout            = 600
+max_allowed_packet      = 16M
+thread_cache_size       = 128
+sort_buffer_size        = 4M
+bulk_insert_buffer_size = 16M
+tmp_table_size          = 32M
+max_heap_table_size     = 32M
+
+#
+# * Query Cache Configuration
+#
+# Cache only tiny result sets, so we can fit more in the query cache.
+#query_cache_limit              = 128K
+query_cache_size                = 0
+# for more write intensive setups, set to DEMAND or OFF
+query_cache_type                = 0
+
+# 
+# Logging
+#
+# Log failed login attempts and network problems
+log-warnings = 2
+# Enable the slow query log to see queries with especially long duration
+{% if mysql_slow_log_enabled %}
+slow_query_log = 1
+slow_query_log_file     = {{ log_dir }}/mariadb-slow.log
+long_query_time = 2
+log_slow_verbosity      = query_plan      # adds the optimizer's query plan to the statement
+log-queries-not-using-indexes
+{% endif %}
+
+{% if mysql_auditing_enabled %}
+#
+# Auditing
+#
+server_audit=FORCE_PLUS_PERMANENT                           # prevents the plugin from being uninstalled
+server_audit_logging=1                                      # enable audit logging
+server_audit_output_type=SYSLOG                             # logging target is syslog
+server_audit_events='connect,table,query_ddl,query_dcl'     # events to be logged
+server_audit_syslog_ident=mysql_auditing                    # the tag to identify audit logs in the syslog
+{% endif %}
+
+{% if mysql_binlog_enabled %}
+#
+# Binlog Config
+#
+log_bin                 = {{ mysql_data_dir }}/binlogs/mariadb-bin
+log_bin_index           = {{ mysql_data_dir }}/binlogs/mariadb-bin.index
+binlog_format=ROW
+expire_logs_days=8
+{% endif %}
+{% if mysql_storage_engine == 'innodb' %}
+#
+# * InnoDB
+#
+innodb_log_file_size    = 256M
+innodb_log_buffer_size  = 512M
+innodb_file_per_table   = 1
+innodb_open_files       = 400
+innodb_io_capacity      = 400
+innodb_flush_method     = O_DIRECT
+innodb_autoinc_lock_mode=2
+innodb_flush_log_at_trx_commit=0
+innodb_buffer_pool_size=2048M      # best practice: 50% of the max memory
+innodb_buffer_pool_instances=1
+{% endif %}
+
+{% if mysql_galera_node %}
+#
+# Galera Cluster Setup
+#
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so	# standard installation path
+wsrep_provider_options="gcache.size=300M; gcache.page_size=300M"
+wsrep_cluster_name="prod_dbs_cluster"
+wsrep_cluster_address="gcomm://10.15.2.93,10.15.2.91,10.16.3.92,10.16.3.94,10.16.3.96"
+wsrep_sst_method=rsync					# default: rsync
+#wsrep_node_name=MyNode1				# has to be changed within every cluster node my.cnf
+#wsrep_node_address="10.15.2.91"		# own IP address
+wsrep_gtid_domain_id=2
+wsrep_on=on
+{% endif %}
+[mysql_safe]
+log-error={{ mysql_log_dir }}/error.log
+pid-file={{ mysql_pid }}
+
+#!includedir /etc/mysql/conf.d/
