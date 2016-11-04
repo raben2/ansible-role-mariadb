@@ -10,7 +10,8 @@
     state: directory
     dest: "{{ item }}"
     owner: "{{ mysql_user }}"
-    mode: 0700
+    mode: 0770
+    group: "{{ mysql_group }}"
   with_items: 
     - "{{ mysql_data_dir }}"
     - "{{ mysql_log_dir }}"
