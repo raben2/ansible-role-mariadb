@@ -1,6 +1,6 @@
 # Ansible Role: MariaDB
 
-Installs MariaDB
+Installs MariaDB with support of custom directories and selinux
 
 ## Supported platforms
 
@@ -22,7 +22,7 @@ None
 MariaDB version:
 
 ```
-mariadb_version: 10.0
+mariadb_version: 10.1.18
 ```
 
 Configuration template:
