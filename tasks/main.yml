@@ -9,7 +9,9 @@
   template: src={{ mysql_conf_tpl }} dest={{ mysql_conf_dir[ansible_distribution] }}/{{ mysql_conf_file }} owner=root group=root mode=0644
   when: mysql_conf_tpl != 'change_me'
   notify: restart mysql
-
+- name: mysql_install_db
+  command: "mysql_install_db"
+  creates: "{{ mysql_data_dir }}/mysql/"
 - name: Start and enable service
   systemd: 
     name: mysql
