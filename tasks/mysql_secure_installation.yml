@@ -6,10 +6,13 @@
 - name: Set root Password
   mysql_user: 
     name: root 
-    host: "{{ mysql_bind_address }}" 
+    host: "{{ item }}" 
     password: "{{ mysql_root_password }}" 
     state: present
     priv: '*.*:ALL'
+  with_items:
+      - localhost
+      - 127.0.0.1
 
 - name: Reload privilege tables
   command: 'mysql -ne "{{ item }}"'
