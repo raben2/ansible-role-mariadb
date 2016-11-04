@@ -6,22 +6,19 @@
 - name: Set root Password
   mysql_user: 
     name: root 
-    host: "{{ item }}" 
+    host: localhost 
     password: "{{ mysql_root_password }}" 
     state: present
     priv: '*.*:ALL'
-  with_items:
-      - localhost
-      - 127.0.0.1
+
+- name: Add .my.cnf
+  template: src=my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0600
 
 - name: Reload privilege tables
   command: 'mysql -ne "{{ item }}"'
   with_items:
     - FLUSH PRIVILEGES
   changed_when: False
-
-- name: Add .my.cnf
-  template: src=my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0600
 
 - name: Remove anonymous users
   command: 'mysql -ne "{{ item }}"'
@@ -36,12 +33,10 @@
   changed_when: False
 
 - name: Remove test database and access to it
-  command: 'mysql -ne "{{ item }}"'
-  with_items:
-    - DROP DATABASE test
-    - DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'
-  changed_when: False
-  ignore_errors: True
+  mysql_db: 
+    name: test
+    state: absent
+  become: yes
 
 - name: Reload privilege tables
   command: 'mysql -ne "{{ item }}"'
