@@ -1,3 +1,21 @@
 ---
 - name: restart mysql
-  service: name=mysql state=restarted
+  systemd: 
+    name: mysql 
+    state: restarted
+    enabled: yes
+- name: stop mysql
+  systemd: 
+    name: mysql 
+    state: stopped
+    enabled: yes
+- name: disable mysql
+  systemd: 
+    name: mysql 
+    state: stopped
+    enabled: no
+- name: start mysql
+  systemd: 
+    name: mysql 
+    state: started
+    enabled: yes

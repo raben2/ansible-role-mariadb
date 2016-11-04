@@ -1,7 +1,7 @@
 ---
-mariadb_version: 10.0
+mariadb_version: 10.1.18
 
 mysql_conf_tpl: change_me
 mysql_conf_file: settings.cnf
 
-mysql_secure_installation: false
+mysql_secure_installation: True
