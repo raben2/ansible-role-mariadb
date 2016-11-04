@@ -21,6 +21,8 @@
   with_items: 
     - "{{ mysql_data_dir }}"
     - "{{ mysql_log_dir }}"
+    - "{{ mysql_pid }}"
+    - "{{ mysql_socket }}"
 
 - name: Install MySQLdb Python package for secure installations.
   yum: name=MySQL-python state=present

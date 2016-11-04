@@ -1,7 +1,7 @@
 [mysqld]
 # Basic setup
 datadir = {{ mysql_data_dir }}
-socket = {{ mysql_socket }}
+socket = {{ mysql_socket }}/mysql.sock
 user = {{ mysql_user }}
 bind-address={{ mysql_bind_address }}
 default_storage_engine={{ mysql_storage_engine }}
@@ -92,6 +92,6 @@ wsrep_on=on
 {% endif %}
 [mysql_safe]
 log-error={{ mysql_log_dir }}/error.log
-pid-file={{ mysql_pid }}
+pid-file={{ mysql_pid }}/mysqld.pid
 
 #!includedir /etc/mysql/conf.d/
