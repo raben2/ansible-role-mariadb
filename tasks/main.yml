@@ -11,7 +11,8 @@
   notify: restart mysql
 - name: mysql_install_db
   command: "mysql_install_db"
-  creates: "{{ mysql_data_dir }}/mysql/"
+  args:
+    creates: "{{ mysql_data_dir }}/mysql/"
 - name: Start and enable service
   systemd: 
     name: mysql
