@@ -8,6 +8,20 @@
     - MariaDB-server
     - MariaDB-client
 
+- name: ensure directories
+  file:
+    state: directory
+    dest: "{{ item }}"
+    owner: "{{ mysql_user }}"
+    mode: 0770
+    group: "{{ mysql_group }}"
+    seuser: unconfined_u
+    setype: mysqld_db_t
+    serole: object_r
+  with_items: 
+    - "{{ mysql_data_dir }}"
+    - "{{ mysql_log_dir }}"
+
 - name: Install MySQLdb Python package for secure installations.
   yum: name=MySQL-python state=present
   when: mysql_secure_installation and mysql_root_password is defined
