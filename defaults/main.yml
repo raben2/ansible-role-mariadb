@@ -8,8 +8,8 @@ mysql_root_password: change_me
 mysql_secure_installation: True
 mysql_data_dir: /var/lib/mysql
 mysql_log_dir: /var/log/mysql
-mysql_socket: /var/lib/mysql/mysql.sock
-mysql_pid: /var/run/mysqld/mysqld.pid
+mysql_socket: /var/lib/mysql
+mysql_pid: /var/run/mysqld
 mysql_user: mysql
 mysql_group: mysql
 mysql_bind_address: 0.0.0.0

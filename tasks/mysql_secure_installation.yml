@@ -4,11 +4,7 @@
 # FLUSH PRIVILEGES;
 
 - name: Set root Password
-  mysql_user: name=root host={{ item }} password={{ mysql_root_password }} state=present
-  with_items:
-    - localhost
-    - 127.0.0.1
-    - ::1
+  mysql_user: name=root host={{ mysql_bind_address }} password={{ mysql_root_password }} state=present
 
 - name: Reload privilege tables
   command: 'mysql -ne "{{ item }}"'
