@@ -4,7 +4,12 @@
 # FLUSH PRIVILEGES;
 
 - name: Set root Password
-  mysql_user: name=root host={{ mysql_bind_address }} password={{ mysql_root_password }} state=present
+  mysql_user: 
+    name: root 
+    host: "{{ mysql_bind_address }}" 
+    password: "{{ mysql_root_password }}" 
+    state: present
+    priv: '*.*:ALL'
 
 - name: Reload privilege tables
   command: 'mysql -ne "{{ item }}"'
