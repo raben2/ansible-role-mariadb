@@ -1,9 +1,8 @@
 ---
 galaxy_info:
-  author: "Attila van der Velde"
+  author: "Georg Rabenstein"
   description: "Installs MariaDB"
-  company: "PCextreme B.V."
-  license: "license (MIT, BSD)"
+  license: "GNU"
   min_ansible_version: 1.8
   platforms:
     - name: EL

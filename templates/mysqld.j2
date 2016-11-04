@@ -77,18 +77,7 @@ innodb_buffer_pool_instances=1
 {% endif %}
 
 {% if mysql_galera_node %}
-#
-# Galera Cluster Setup
-#
-wsrep_provider=/usr/lib64/galera/libgalera_smm.so	# standard installation path
-wsrep_provider_options="gcache.size=300M; gcache.page_size=300M"
-wsrep_cluster_name="prod_dbs_cluster"
-wsrep_cluster_address="gcomm://10.15.2.93,10.15.2.91,10.16.3.92,10.16.3.94,10.16.3.96"
-wsrep_sst_method=rsync					# default: rsync
-#wsrep_node_name=MyNode1				# has to be changed within every cluster node my.cnf
-#wsrep_node_address="10.15.2.91"		# own IP address
-wsrep_gtid_domain_id=2
-wsrep_on=on
+# Not implemented yet
 {% endif %}
 [mysql_safe]
 log-error={{ mysql_log_dir }}/error.log

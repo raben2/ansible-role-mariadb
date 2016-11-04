@@ -28,13 +28,13 @@ mariadb_version: 10.0
 Configuration template:
 
 ```
-mysql_conf_tpl: change_me
+mysql_conf_tpl: mysqld.j2
 ```
 
 Configuration filename:
 
 ```
-mysql_conf_file: settings.cnf
+mysql_conf_file: my.cnf
 ```
 
 ### Experimental unattended mysql_secure_installation
@@ -52,13 +52,9 @@ None
 ```
 - hosts: servers
   roles:
-    - { role: pcextreme.mariadb }
+    - { role: raben2.mariadb }
 ```
 
 ## Credits
 
-- [Attila van der Velde](https://github.com/vdvm)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+- [Georg Rabenstein](https://github.com/raben2)
