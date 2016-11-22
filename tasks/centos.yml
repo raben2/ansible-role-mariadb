@@ -25,7 +25,6 @@
     - galera
   when: "{{ mysql_galera_node }}"
   
-
 - name: ensure directories
   file:
     state: directory
@@ -41,6 +40,7 @@
     - "{{ mysql_log_dir }}"
     - "{{ mysql_pid }}"
     - "{{ mysql_socket }}"
+    - "{{ mysql_binlog_dir }}"
 
 - name: Install MySQLdb Python package for secure installations.
   yum: name=MySQL-python state=present
