@@ -1,17 +1,17 @@
 ---
 - name: restart mysql
   systemd: 
-    name: mysql 
+    name: mysqld
     state: restarted
     enabled: yes
 - name: stop mysql
   systemd: 
-    name: mysql 
+    name: mysqld 
     state: stopped
     enabled: yes
 - name: disable mysql
   systemd: 
-    name: mysql 
+    name: mysqld
     state: stopped
     enabled: no
 - name: start mysql

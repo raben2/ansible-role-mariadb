@@ -1,7 +1,7 @@
 ---
 # Set root password
 # UPDATE mysql.user SET Password=PASSWORD('mysecret') WHERE User='root';
-# FLUSH PRIVILEGES;
+# FLUSH PRIVILEGES
 
 - name: Set root Password
   mysql_user: 
