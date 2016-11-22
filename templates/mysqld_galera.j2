@@ -17,6 +17,14 @@ bulk_insert_buffer_size = 16M
 tmp_table_size          = 32M
 max_heap_table_size     = 32M
 
+{% if mysql_galera_node %}
+#GTID
+server_id={{ mysql_galera_node_id }}
+gtid_domain_id={{ mysql_galera_node_id }}
+log_slave_updates
+gtid_ignore_duplicates=1
+gtid_strict_mode=1
+{% endif %}
 #
 # * Query Cache Configuration
 #
@@ -51,7 +59,15 @@ server_audit_events='connect,table,query_ddl,query_dcl'     # events to be logge
 server_audit_syslog_ident=mysql_auditing                    # the tag to identify audit logs in the syslog
 {% endif %}
 
-
+{% if mysql_binlog_enabled %}
+#
+# Binlog Config
+#
+log_bin                 = {{ mysql_data_dir }}/binlogs/mariadb-bin
+log_bin_index           = {{ mysql_data_dir }}/binlogs/mariadb-bin.index
+binlog_format=ROW
+expire_logs_days=8
+{% endif %}
 {% if mysql_storage_engine == 'innodb' %}
 #
 # * InnoDB
@@ -68,6 +84,15 @@ innodb_buffer_pool_size=2048M      # best practice: 50% of the max memory
 innodb_buffer_pool_instances=1
 {% endif %}
 
+{% if mysql_galera_node %}
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so	# standard installation path
+wsrep_provider_options="gcache.size=300M; gcache.page_size=300M"
+wsrep_cluster_name="{{ mysql_galera_cluster_name }}"
+wsrep_cluster_address="gcomm://{{ mysql_galera_cluster_nodes }}"
+wsrep_sst_method=rsync					# default: rsync
+wsrep_gtid_domain_id={{ mysql_galera_node_id }}
+wsrep_on=on
+{% endif %}
 
 
 [mysql_safe]

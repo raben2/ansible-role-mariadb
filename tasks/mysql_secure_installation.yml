@@ -6,7 +6,8 @@
 - name: Set root Password
   mysql_user: 
     name: root 
-    host: localhost 
+    host: localhost
+    login_socket: "{{ mysql_socket }}/mysql.sock" 
     password: "{{ mysql_root_password }}" 
     state: present
     host_all: yes
