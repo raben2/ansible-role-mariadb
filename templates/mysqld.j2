@@ -64,7 +64,7 @@ innodb_io_capacity      = 400
 innodb_flush_method     = O_DIRECT
 innodb_autoinc_lock_mode=2
 innodb_flush_log_at_trx_commit=0
-innodb_buffer_pool_size=2048M      # best practice: 50% of the max memory
+innodb_buffer_pool_size={{ ram // 2 }}M      # best practice: 50% of the max memory
 innodb_buffer_pool_instances=1
 {% endif %}
 
