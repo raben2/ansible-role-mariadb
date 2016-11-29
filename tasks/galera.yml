@@ -11,6 +11,37 @@
   with_items:
     - galera
 
+- name: Create Galera Admins
+  mysql_user: 
+    name: "{{ item.name }}" 
+    login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
+    password: "{{ item.secrets }}" 
+    state: present
+    host: "{{ item.host }}"
+    encrypted: yes
+    priv: "{{ item.privileges }}"
+  when: 
+    - "{{ mysql_install_galera_admins |bool}}"
+    - ("{{ item.host }}" != "all")
+  with_items: 
+    - "{{ mysql_galera_admins }}"
+
+- name: Create Galera Admins
+  mysql_user: 
+    name: "{{ item.name }}" 
+    login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
+    password: "{{ item.secrets }}" 
+    state: present
+    host_all: yes
+    encrypted: yes
+    priv: "{{ item.privileges }}"
+  when: 
+    - "{{ mysql_install_galera_admins |bool}}"
+    - ("{{ item.host }}" == "all")
+  with_items: 
+    - "{{ mysql_galera_admins }}"
+
+
 - name: Add galera configuration
   template: 
     src:  mysqld_galera.j2 

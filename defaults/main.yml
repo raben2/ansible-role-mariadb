@@ -22,3 +22,4 @@ mysql_galera_node: False
 mysql_galera_cluster_nodes: 127.0.0.1
 mysql_monitoring_user: none
 mysql_monitoring_user_pw: none
+mysql_install_galera_admins: False
