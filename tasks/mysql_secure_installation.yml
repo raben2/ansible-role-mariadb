@@ -3,6 +3,18 @@
 # UPDATE mysql.user SET Password=PASSWORD('mysecret') WHERE User='root';
 # FLUSH PRIVILEGES
 
+- name: Activate Montioring user
+  mysql_user: 
+    name: "{{ mysql_monitoring_user }}" 
+    login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
+    password: "{{ mysql_monitoring_user_pw }}" 
+    state: present
+    host: "{{ monitoring_endpoint }}"
+    encrypted: yes
+    priv: '*.*:SELECT,GRANT'
+  when:
+    - ("{{ mysql_monitoring_user }}" != "none")
+
 - name: Set root Password
   mysql_user: 
     name: root 
@@ -10,24 +22,14 @@
     login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
     password: "{{ mysql_root_password }}" 
     state: present
-    encrypted: yes
+    encrypted: no
     priv: '*.*:ALL,GRANT'
 
-- name: Activate Montioring user
-  mysql_user: 
-    name: "{{ mysql_montioring_user }}" 
-    host: localhost
-    login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
-    password: "{{ mysql_monitoring_pw }}" 
-    state: present
-    host: "{{ monitoring_endpoint }}"
-    encrypted: yes
-    priv: '*.*:SELECT,GRANT'
-  when:
-    - ("{{ mysql_montioring_user }}" != "none")
-
-- name: Add .my.cnf
-  template: src=my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0600
+- name: generate root .my.cnf
+  template: 
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
 
 - name: Reload privilege tables
   command: 'mysql -ne "{{ item }}"'
