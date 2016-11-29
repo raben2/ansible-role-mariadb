@@ -20,6 +20,7 @@
     password: "{{ mysql_monitoring_pw }}" 
     state: present
     host_all: yes
+    encrypted: yes
     priv: '*.*:SELECT,GRANT'
   when:
     - ("{{ mysql_montioring_user }}" != "none")
