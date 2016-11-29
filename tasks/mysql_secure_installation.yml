@@ -10,6 +10,7 @@
     login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
     password: "{{ mysql_root_password }}" 
     state: present
+    encrypted: yes
     priv: '*.*:ALL,GRANT'
 
 - name: Activate Montioring user
@@ -19,7 +20,7 @@
     login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
     password: "{{ mysql_monitoring_pw }}" 
     state: present
-    host_all: yes
+    host: "{{ monitoring_endpoint }}"
     encrypted: yes
     priv: '*.*:SELECT,GRANT'
   when:
