@@ -10,8 +10,19 @@
     login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
     password: "{{ mysql_root_password }}" 
     state: present
-    host_all: yes
     priv: '*.*:ALL,GRANT'
+
+- name: Activate Montioring user
+  mysql_user: 
+    name: "{{ mysql_montioring_user }}" 
+    host: localhost
+    login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
+    password: "{{ mysql_monitoring_pw }}" 
+    state: present
+    host_all: yes
+    priv: '*.*:SELECT,GRANT'
+  when:
+    - ("{{ mysql_montioring_user }}" != "none")
 
 - name: Add .my.cnf
   template: src=my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0600
