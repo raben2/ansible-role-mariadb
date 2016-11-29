@@ -19,3 +19,10 @@
     name: mysql 
     state: started
     enabled: yes
+
+- name: restart galera
+  systemd: 
+    name: mariadb
+    state: restarted
+    enabled: yes
+  ignore_errors: True

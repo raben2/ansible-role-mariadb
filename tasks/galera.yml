@@ -30,7 +30,22 @@
   mysql_user: 
     name: "{{ item.name }}" 
     login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
-    password: "{{ item.secrets }}" 
+    password: "{{ item.secret }}" 
+    state: present
+    host: localhost
+    encrypted: yes
+    priv: "{{ item.privileges }}"
+  when: 
+    - "{{ mysql_install_galera_admins |bool}}"
+    - ("{{ item.host }}" == "all")
+  with_items: 
+    - "{{ mysql_galera_admins }}"
+
+- name: Create Galera Admins
+  mysql_user: 
+    name: "{{ item.name }}" 
+    login_unix_socket: "{{ mysql_socket }}/mysql.sock" 
+    password: "{{ item.secret }}" 
     state: present
     host_all: yes
     encrypted: yes
@@ -50,5 +65,5 @@
     group: "root" 
     mode: 0644
   notify:
-    - restart mysql
+    - restart galera
     

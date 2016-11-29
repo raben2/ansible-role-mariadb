@@ -47,7 +47,8 @@ mysql_galera_admins:
       host: all
       secret: '*6F7D24BFE9182B69A694610065E88B6DA1790B23'
 ```
-
+The setup will probably return an error if you sync an existing cluster
+it might take a while until the sync is completed.
 
 
 ### Experimental unattended mysql_secure_installation
