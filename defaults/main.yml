@@ -20,6 +20,8 @@ mysql_auditing_enabled: False
 mysql_binlog_enabled: False
 mysql_galera_node: False
 mysql_galera_cluster_nodes: 127.0.0.1
+# add user and password hash for external monitoring ro access
 mysql_monitoring_user: none
 mysql_monitoring_user_pw: none
+# provide a list of users to be galera admins
 mysql_install_galera_admins: False

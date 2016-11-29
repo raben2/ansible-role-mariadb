@@ -37,6 +37,19 @@ Configuration filename:
 mysql_conf_file: my.cnf
 ```
 
+### Galera Node installation
+provide a set of users to control the cluster
+
+```
+mysql_galera_admins:
+    - name: galera_admin
+      privileges: "*.*:ALL,GRANT"
+      host: all
+      secret: '*6F7D24BFE9182B69A694610065E88B6DA1790B23'
+```
+
+
+
 ### Experimental unattended mysql_secure_installation
 
 ```
