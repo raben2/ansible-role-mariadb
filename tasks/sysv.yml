@@ -1,0 +1,32 @@
+---
+
+- name: add mysql service file
+  template:
+    src: mysql.service.j2
+    dest: /usr/lib/systemd/system/mysql.service
+  when: 
+    - ansible_os_family == "RedHat"
+
+
+- name: add mysql service file
+  template:
+    src: mysql.service.j2
+    dest: /lib/systemd/system/mysql.service
+  when: 
+    - ansible_os_family == "Debian"
+
+- name: update init script
+  lineinfile:
+    path: /etc/init.d/mysql
+    regexp: "^lockdir=*"
+    line: lockdir='/var/lib/mysql'
+    owner: "{{ mysql_user }}"
+    group: "{{ mysql_group }}" 
+
+
+- name: enable service
+  systemd:
+    name: mysql
+    state: started
+    daemon_reload: yes
+    enabled: yes

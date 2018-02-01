@@ -1,0 +1,21 @@
+[Unit]
+Description=MySQL Community Server
+After=network.target
+
+
+[Install]
+WantedBy=multi-user.target
+Alias=mysql.service
+
+[Service]
+User={{ mysql_user }}
+Group={{ mysql_group }}
+PIDFile={{ mysql_pid }}/mysql.pid
+StandardOutput=journal
+StandardError=journal
+ExecStart=/usr/sbin/mysqld --basedir=/usr --datadir={{ mysql_data_dir }} --plugin-dir=/usr/lib64/mysql/plugin --socket={{ mysql_socket }}/mysql.sock
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGINT
+TimeoutSec=600
+PrivateTmp=false
