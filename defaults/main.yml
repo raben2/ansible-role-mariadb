@@ -1,5 +1,5 @@
 ---
-mariadb_version: 5.7.21 
+mariadb_version: 10.1.18
 
 mysql_conf_tpl: mysqld.j2
 mysql_conf_file: my.cnf
