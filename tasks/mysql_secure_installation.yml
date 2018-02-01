@@ -13,7 +13,7 @@
     encrypted: yes
     priv: '*.*:SELECT,GRANT'
   when:
-    - ("{{ mysql_monitoring_user }}" != "none")
+    - (mysql_monitoring_user != "none")
 
 - name: Set root Password
   mysql_user: 

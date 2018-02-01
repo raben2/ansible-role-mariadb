@@ -19,6 +19,7 @@
   command: "mysql_install_db"
   args:
     creates: "{{ mysql_data_dir }}/mysql/"
+    
 - name: Start and enable service
   systemd: 
     name: mysql
@@ -29,4 +30,5 @@
   when: mysql_secure_installation and mysql_root_password is defined
 
 - include: galera.yml
-  when: "{{ mysql_galera_node |bool }}"
+  when: 
+    - mysql_galera_node

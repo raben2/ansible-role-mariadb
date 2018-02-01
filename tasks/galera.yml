@@ -21,8 +21,8 @@
     encrypted: yes
     priv: "{{ item.privileges }}"
   when: 
-    - "{{ mysql_install_galera_admins |bool}}"
-    - ("{{ item.host }}" != "all")
+    - "mysql_install_galera_admins"
+    - (item.host != "all")
   with_items: 
     - "{{ mysql_galera_admins }}"
 
@@ -36,8 +36,8 @@
     encrypted: yes
     priv: "{{ item.privileges }}"
   when: 
-    - "{{ mysql_install_galera_admins |bool}}"
-    - ("{{ item.host }}" == "all")
+    - "mysql_install_galera_admins"
+    - (item.host == "all")
   with_items: 
     - "{{ mysql_galera_admins }}"
 
@@ -51,8 +51,8 @@
     encrypted: yes
     priv: "{{ item.privileges }}"
   when: 
-    - "{{ mysql_install_galera_admins |bool}}"
-    - ("{{ item.host }}" == "all")
+    - "mysql_install_galera_admins}"
+    - (item.host == "all")
   with_items: 
     - "{{ mysql_galera_admins }}"
 

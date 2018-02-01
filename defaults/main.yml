@@ -1,5 +1,5 @@
 ---
-mariadb_version: 10.1.18
+mariadb_version: 5.7.21 
 
 mysql_conf_tpl: mysqld.j2
 mysql_conf_file: my.cnf
@@ -18,7 +18,7 @@ mysql_storage_engine: innodb
 mysql_slow_log_enabled: True
 mysql_auditing_enabled: False
 mysql_binlog_enabled: False
-mysql_galera_node: False
+mysql_galera_node: False #set to true to install galera
 mysql_galera_cluster_nodes: 127.0.0.1
 # add user and password hash for external monitoring ro access
 mysql_monitoring_user: none
